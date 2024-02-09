@@ -44,7 +44,7 @@ public class TouristController {
         TouristAttraction touristAttraction = touristService.changeAttraction(attraction);
         if (touristAttraction == null){
             return new ResponseEntity<>(new TouristAttraction(
-                    "Does","Not Exist"), HttpStatus.BAD_REQUEST);
+                    "Doesn't","Exist"), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(touristAttraction, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class TouristController {
         TouristAttraction touristAttraction = touristService.deleteAttraction(name);
         if (touristAttraction == null){
             return new ResponseEntity<>(new TouristAttraction(
-                    "Does","Not Exist"), HttpStatus.BAD_REQUEST);
+                    "Doesn't","Exist"), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(touristAttraction, HttpStatus.OK);
     }
