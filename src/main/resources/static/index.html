@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turistguide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Turistguide</h1>
+    <nav>
+        <ul>
+            <li><a href="http://localhost:8080/attractions">Se vores udvalgte turistattraktioner</a></li>
+            <li><a href="http://localhost:8080/attractions/Eiffel Tower">Se Eiffel Tower</a></li>
+            <li><a href="http://localhost:8080/attractions/delete/Statue of Liberty">Slet turistattraktionen: "Statue of Liberty"</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Velkommen til vores turistguide</h2>
+        <p>Denne turistguide dækker turistattraktioner i forskellige destinationer rundt om i verden. Vi tilbyder information om ikoniske seværdigheder, såsom Eiffel Tower og Statue of Liberty.</p>
+        <h3>Udvalgte turistattraktioner:</h3>
+        <ul id="attractions-list">
+            <li>
+                <img src="eiffel_tower.jpg" alt="Eiffel Tower">
+                <div class="attraction-info">
+                    <h4>Eiffel Tower</h4>
+                    <p>Iconic tower in Paris</p>
+                </div>
+            </li>
+            <li>
+                <img src="statue_of_liberty.jpg" alt="Statue of Liberty">
+                <div class="attraction-info">
+                    <h4>Statue of Liberty</h4>
+                    <p>Iconic statue in New York</p>
+                </div>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>Kontakt os på telefon: 12345678 eller via email: info@turistguide.com</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

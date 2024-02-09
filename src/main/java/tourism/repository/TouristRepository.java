@@ -5,7 +5,6 @@ import tourism.model.TouristAttraction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class TouristRepository {
@@ -13,34 +12,48 @@ public class TouristRepository {
     private List<TouristAttraction> attractions;
 
     public TouristRepository() {
-        this.attractions = new ArrayList<>();
-        this.attractions.add(new TouristAttraction("Eiffel Tower", "Iconic tower in Paris"));
-        this.attractions.add(new TouristAttraction("Statue of Liberty", "Iconic statue in New York"));
+        attractions = new ArrayList<>();
+        attractions.add(new TouristAttraction("Eiffel Tower", "Iconic tower in Paris"));
+        attractions.add(new TouristAttraction("Statue of Liberty", "Iconic statue in New York"));
     }
 
     public List<TouristAttraction> getAllAttractions() {
         return attractions;
     }
 
-    public Optional<TouristAttraction> findAttractionByName(String name) {
-        return attractions.stream()
-                .filter(attraction -> attraction.getName().equals(name))
-                .findFirst();
+    public TouristAttraction findAttractionByName(String name) {
+        for (TouristAttraction attraction : attractions) {
+            if (attraction.getName().equalsIgnoreCase(name)) {
+                return attraction;
+            }
+        }
+        return null;
     }
 
     public void addAttraction(TouristAttraction attraction) {
         attractions.add(attraction);
     }
 
-    public void updateAttraction(int index, TouristAttraction attraction) {
-        if (index >= 0 && index < attractions.size()) {
-            attractions.set(index, attraction);
+    public TouristAttraction changeAttraction(TouristAttraction attraction){
+        for (int i = 0; i < attractions.size(); i++) {
+            if (attractions.get(i).getName().equalsIgnoreCase(attraction.getName())){
+                attractions.set(i,attraction);
+                return attraction;
+            }
         }
+        return null;
     }
 
-    public void deleteAttraction(int index) {
-        if (index >= 0 && index < attractions.size()) {
-            attractions.remove(index);
+    public TouristAttraction deleteAttraction(String name){
+        TouristAttraction returnAttraction = null;
+        for (TouristAttraction att: attractions) {
+            if (att.getName().equalsIgnoreCase(name)){
+                returnAttraction = att;
+            }
         }
+        if (returnAttraction != null){
+            attractions.remove(returnAttraction);
+        }
+        return returnAttraction;
     }
 }

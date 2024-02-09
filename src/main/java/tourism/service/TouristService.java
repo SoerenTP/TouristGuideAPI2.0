@@ -6,18 +6,22 @@ import tourism.model.TouristAttraction;
 import tourism.repository.TouristRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TouristService {
 
+    private final TouristRepository touristRepository;
+
     @Autowired
-    private TouristRepository touristRepository;
+    public TouristService(TouristRepository touristRepository) {
+        this.touristRepository = touristRepository;
+    }
 
     public List<TouristAttraction> getAllAttractions() {
         return touristRepository.getAllAttractions();
     }
-    public Optional<TouristAttraction> findAttractionByName(String name) {
+
+    public TouristAttraction findAttractionByName(String name) {
         return touristRepository.findAttractionByName(name);
     }
 
@@ -25,11 +29,11 @@ public class TouristService {
         touristRepository.addAttraction(attraction);
     }
 
-    public void updateAttraction(int index, TouristAttraction attraction) {
-        touristRepository.updateAttraction(index, attraction);
+    public TouristAttraction changeAttraction(TouristAttraction attraction){
+        return touristRepository.changeAttraction(attraction);
     }
 
-    public void deleteAttraction(int index) {
-        touristRepository.deleteAttraction(index);
+    public TouristAttraction deleteAttraction(String name){
+        return touristRepository.deleteAttraction(name);
     }
 }

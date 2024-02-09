@@ -1,5 +1,6 @@
 package tourism.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -8,15 +9,15 @@ import tourism.model.TouristAttraction;
 import tourism.service.TouristService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/attractions")
 public class TouristController {
 
+    @Autowired
     private TouristService touristService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<TouristAttraction>> getAllAttractions() {
         List<TouristAttraction> attractions = touristService.getAllAttractions();
         return new ResponseEntity<>(attractions, HttpStatus.OK);
@@ -24,26 +25,37 @@ public class TouristController {
 
     @GetMapping("/{name}")
     public ResponseEntity<TouristAttraction> getAttractionByName(@PathVariable String name) {
-        Optional<TouristAttraction> attraction = touristService.findAttractionByName(name);
-        return attraction.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));    }
-
+        TouristAttraction attraction = touristService.findAttractionByName(name);
+        if (attraction != null) {
+            return new ResponseEntity<>(attraction, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping("/add")
     public ResponseEntity<TouristAttraction> addAttraction(@RequestBody TouristAttraction attraction) {
         touristService.addAttraction(attraction);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(attraction, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{index}")
-    public ResponseEntity<TouristAttraction> updateAttraction(@PathVariable int index, @RequestBody TouristAttraction attraction) {
-        touristService.updateAttraction(index, attraction);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("update")
+    public ResponseEntity<TouristAttraction> changeAttraction(@RequestBody TouristAttraction attraction){
+        TouristAttraction touristAttraction = touristService.changeAttraction(attraction);
+        if (touristAttraction == null){
+            return new ResponseEntity<>(new TouristAttraction(
+                    "Does","Not Exist"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(touristAttraction, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{index}")
-    public ResponseEntity<TouristAttraction> deleteAttraction(@PathVariable int index) {
-        touristService.deleteAttraction(index);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("delete/{name}")
+    public ResponseEntity<TouristAttraction> deleteAttraction(@PathVariable String name){
+        TouristAttraction touristAttraction = touristService.deleteAttraction(name);
+        if (touristAttraction == null){
+            return new ResponseEntity<>(new TouristAttraction(
+                    "Does","Not Exist"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(touristAttraction, HttpStatus.OK);
     }
 }
